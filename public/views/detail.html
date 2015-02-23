@@ -1,0 +1,38 @@
+<div class="container">
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <div class="media">
+        <div class="pull-left">
+          <img class="media-object img-rounded" ng-src="{{record.images}}">
+          <div class="text-center" ng-if="currentUser">
+          <div class="text-center" ng-show="!currentUser">
+            <a class="btn btn-block btn-primary" href="#/login">Login to Listen</a>
+          </div>
+        </div>
+        <div class="media-body">
+          <h2 class="media-heading">
+            {{record.artists[0].name}} - {{record.title}}
+          </h2>
+          <ul >
+            <li class="text-danger">Style: {{record.styles.join(', ')}}</li>
+            <li class="text-danger">Genre: {{record.genres.join(', ')}}</li>
+            <li class="text-danger">Year: {{record.year}}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <span class="glyphicon glyphicon-play"></span> Tracklist
+    </div>
+    <div class="panel-body">
+      <div class="track" ng-repeat="track in record.tracklist">
+        <h4>{{track.title}} -
+        <small> {{track.duration}}</small>
+        </h4>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,33 @@
+<div class="jumbotron">
+  <div class="container">
+    <ul class="genres">
+      <li ng-repeat="genre in genres">
+        <span ng-click="filterByGenre(genre)">{{genre}}</span>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="container">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      {{headingTitle}}
+      <div class="pull-right">
+        <input class="search" type="text" ng-model="query" placeholder="Search...">
+      </div>
+    </div>
+    <div class="panel-body">
+      <div class="row show-list">
+        <div class="col-xs-4 col-md-3" ng-repeat="record in records | filter:query | orderBy:'rating':true">
+          <a href="/records/{{record._id}}">
+            <img class="img-rounded" ng-src="{{record.images}}" width="100%"/>
+          </a>
+          <div class="text-center">
+            <a href="/records/{{record._id}}">{{record.artists[0].name}} - {{record.title}}</a>
+            <p class="text-muted">Tracks: {{record.tracklist.length}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
