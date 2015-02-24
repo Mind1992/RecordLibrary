@@ -68,6 +68,24 @@ exports.create = function(req, res, next) {
           });
           callback(e, record);
         });
+    }, function(record, callback) {
+      superagent.get('https://api.spotify.com/v1/search?q=' + record.artists[0].name + '+' + record.title + '&type=album' )
+        .set({ Accept: 'application/json'})
+        .end(function(e, spotifyResponse){
+          if (e) next(e);
+          var albumId = spotifyResponse.body.albums.items[0].id;
+          callback(e, record, albumId)
+        });
+    }, function(record, albumId, callback) {
+      superagent.get('https://api.spotify.com/v1/albums/' + albumId + '/tracks' )
+        .set({ Accept: 'application/json'})
+        .end(function(e, spotifyResponse){
+          if (e) next(e);
+          for (var i = 0; i < record.tracklist.length; i++) {
+            record.tracklist[i].preview_url = spotifyResponse.body.items[i].preview_url;
+          };
+          callback(e, record)
+        });
     }
   ], function(e, record) {
     if (e) return next(e);

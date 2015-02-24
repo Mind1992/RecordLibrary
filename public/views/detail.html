@@ -31,6 +31,8 @@
       <div class="track" ng-repeat="track in record.tracklist">
         <h4>{{track.title}} -
         <small> {{track.duration}}</small>
+         <button ng-click="play()" class="button" ng-show="!playing">Play</button>
+         <button ng-click="stop()" class="button alert" ng-show="playing">Stop</button>
         </h4>
       </div>
     </div>

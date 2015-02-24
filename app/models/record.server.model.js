@@ -9,7 +9,7 @@ var RecordSchema = new Schema({
   artists: [{join: String, name: String}],
   year: String,
   images: String,
-  tracklist: [{ duration: String, position: String, type_: String, title: String}]
+  tracklist: [{ preview_url: Array, duration: String, position: String, type_: String, title: String }]
 });
 
 mongoose.model('Record', RecordSchema);
