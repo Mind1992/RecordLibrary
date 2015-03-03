@@ -42,8 +42,8 @@ exports.create = function(req, res, next) {
 
   async.waterfall([
     function(callback) {
-      superagent.get('https://api.discogs.com/database/search?q=' + userQuery + '&type=master' + '&key=' + key + '&secret=' + secret)
-        .set({ Accept: 'application/json'})
+      superagent.get('https://api.discogs.com/database/search?q=' + userQuery + '&type=master')
+        .set({ Accept: 'application/json', Authorization: 'Discogs key=' + key + ', secret=' + secret})
         .end(function(e, discogsResponse){
           if (e) next(e);
           var recordResult = discogsResponse.body.results[0];
@@ -52,10 +52,11 @@ exports.create = function(req, res, next) {
     },
     function(recordResult, callback) {
       superagent.get('https://api.discogs.com/masters/' + recordResult.id)
-        .set({ Accept: 'application/json'})
+        .set({ Accept: 'application/json', Authorization: 'Discogs key=' + key + ', secret=' + secret})
         .end(function(e, discogsResponse){
           if (e) next(e);
           var result = discogsResponse.body;
+          console.log(result);
           var record = new Record({
             _id: result.id,
             title: result.title,
