@@ -38,7 +38,7 @@ exports.read = function(req, res, next) {
 exports.create = function(req, res, next) {
   var key = config.key;
   var secret = config.secret;
-  var userQuery = req.body.recordTitle;
+  var userQuery = req.body.recordTitle.replace(/[^A-Z0-9]/ig, "_");
 
   async.waterfall([
     function(callback) {
@@ -56,7 +56,6 @@ exports.create = function(req, res, next) {
         .end(function(e, discogsResponse){
           if (e) next(e);
           var result = discogsResponse.body;
-          console.log(result);
           var record = new Record({
             _id: result.id,
             title: result.title,

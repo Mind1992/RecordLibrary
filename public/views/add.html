@@ -4,9 +4,9 @@
     <div class="panel-body">
       <form class="form" method="post" ng-submit="addRecord()" name="addForm">
         <div class="form-group" ng-class="{ 'has-success' : addForm.recordTitle.$valid && addForm.recordTitle.$dirty, 'has-error' : addForm.recordTitle.$invalid && addForm.recordTitle.$dirty }">
-          <input class="form-control" type="text" name="recordTitle" ng-model="recordTitle" placeholder="Enter Artist and Record Name (ex. michael jackson ben)" required autofocus>
+          <input class="form-control" type="text" name="recordTitle" ng-model="recordTitle" placeholder="Enter Artist and Album Name (ex. michael jackson ben)" required autofocus>
           <div class="help-block text-danger" ng-if="addForm.recordTitle.$dirty" ng-messages="addForm.recordTitle.$error">
-            <div ng-message="required">Enter Record Name</div>
+            <div ng-message="required">Enter Artist and Album Name</div>
           </div>
         </div>
         <button class="btn btn-primary" type="submit" ng-disabled="addForm.$invalid">Add</button>
