@@ -38,14 +38,17 @@ exports.read = function(req, res, next) {
 exports.create = function(req, res, next) {
   var key = config.key;
   var secret = config.secret;
-  var userQuery = req.body.recordTitle.replace(/[^A-Z0-9]/ig, "_");
+  var userQuery = req.body.recordTitle.toLowerCase().replace(/[^A-Z0-9]/ig, "_");
+  console.log(userQuery);
 
   async.waterfall([
     function(callback) {
       superagent.get('https://api.discogs.com/database/search?q=' + userQuery + '&type=master')
         .set({ Accept: 'application/json', Authorization: 'Discogs key=' + key + ', secret=' + secret})
         .end(function(e, discogsResponse){
-          if (e) next(e);
+          if (!discogsResponse.body.results[0]) {
+            return res.send(400, {message: req.body.recordTitle + ' was not found.'});
+          }
           var recordResult = discogsResponse.body.results[0];
           callback(e, recordResult);
         });
